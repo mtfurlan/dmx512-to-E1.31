@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DMX_CONTROL version="2.00">
+	<event continuous="yes" type="NORMAL_CONDITION_1">
+		<timeblock mseconds="60">
+			<setvalue index="0" value="255" change="0"/>
+			<setvalue index="1" value="0" change="0"/>
+			<setvalue index="2" value="0" change="0"/>
+			<setvalue index="3" value="0" change="0"/>
+			<setvalue index="4" value="0" change="0"/>
+			<setvalue index="5" value="0" change="0"/>
+		</timeblock>
+	</event>
+
+<!--		ENERGY LEVELS			-->
+	
+	<event continuous="yes" type="ENERGY_100">
+		<timeblock mseconds="60">
+			<setvalue index="0" value="255" change="0"/>
+		</timeblock>
+	</event>
+	<event continuous="yes" type="ENERGY_80">
+		<timeblock mseconds="60">
+			<setvalue index="0" value="255" change="0"/>
+		</timeblock>
+	</event>
+	<event continuous="yes" type="ENERGY_60">
+		<timeblock mseconds="60">
+			<setvalue index="0" value="255" change="0"/>
+		</timeblock>
+	</event>
+	<event continuous="yes" type="ENERGY_40">
+		<timeblock mseconds="60">
+			<setvalue index="0" value="180" change="0"/>
+		</timeblock>
+	</event>
+	<event continuous="yes" type="ENERGY_20">
+		<timeblock mseconds="60">
+			<setvalue index="0" value="140" change="0"/>
+		</timeblock>
+	</event>
+
+<!--		PLAYER AND NEBULA		-->
+
+	<event continuous="yes" type="WITHIN_NEBULA">
+		<timeblock mseconds="60">
+			<setvalue index="1" value="1" change="0"/>
+		</timeblock>
+	</event>
+	<event continuous="no" type="ENTERING_NEBULA">
+		<timeblock mseconds="60">
+			<setvalue index="1" value="1" change="0"/>
+		</timeblock>
+	</event>
+	<event continuous="no" type="EXITING_NEBULA">
+		<timeblock mseconds="60">
+			<setvalue index="1" value="1" change="0"/>
+		</timeblock>
+	</event>
+
+
+<!--		PLAYER GETS HIT BY WEAPON	-->
+
+	<event continuous="no" type="SOMETHING_HITS_PLAYER">
+		<timeblock mseconds="100">
+			<setvalue index="2" value="1" change="0"/>
+		</timeblock>
+	</event>
+
+	<event continuous="no" type="NPC_BEAM_HITS_PLAYER">
+		<timeblock mseconds="100">
+			<setvalue index="2" value="1" change="0"/>
+		</timeblock>
+	</event>
+	<event continuous="no" type="PLAYER_BEAM_HITS_PLAYER">
+		<timeblock mseconds="100">
+			<setvalue index="2" value="1" change="0"/>
+		</timeblock>
+	</event>
+	<event continuous="no" type="DRONE_HITS_PLAYER">
+		<timeblock mseconds="100">
+			<setvalue index="2" value="2" change="0"/>
+		</timeblock>
+	</event>
+	<event continuous="no" type="MINE_HITS_PLAYER">
+		<timeblock mseconds="100">
+			<setvalue index="2" value="2" change="0"/>
+		</timeblock>
+	</event>
+	<event continuous="no" type="TORPEDO_HITS_PLAYER">
+		<timeblock mseconds="100">
+			<setvalue index="2" value="2" change="0"/>
+		</timeblock>
+	</event>
+	<event continuous="no" type="COLLISION_HITS_PLAYER">
+		<timeblock mseconds="100">
+			<setvalue index="2" value="3" change="0"/>
+		</timeblock>
+	</event>
+
+<!--		PLAYER GETS HIT WHERE		-->
+
+	<event continuous="no" type="PLAYER_TAKES_SHIELD_DAMAGE">
+		<timeblock mseconds="60">
+			<setvalue index="3" value="1" change="0"/>
+		</timeblock>
+	</event>
+	<event continuous="no" type="PLAYER_TAKES_INTERNAL_DAMAGE">
+		<timeblock mseconds="60">
+			<setvalue index="3" value="2" change="0"/>
+		</timeblock>
+	</event>
+
+<!--		SHIP DAMAGE			-->
+	<event continuous="yes" type="SHIP_DAMAGE_20">
+		<timeblock mseconds="200">
+			<setvalue index="5" value="1" change="0"/>
+		</timeblock>
+	</event>
+	<event continuous="yes" type="SHIP_DAMAGE_40">
+		<timeblock mseconds="200">
+			<setvalue index="5" value="2" change="0"/>
+		</timeblock>
+	</event>
+	<event continuous="yes" type="SHIP_DAMAGE_60">
+		<timeblock mseconds="200">
+			<setvalue index="5" value="3" change="0"/>
+		</timeblock>
+	</event>
+
+
+</DMX_CONTROL>
