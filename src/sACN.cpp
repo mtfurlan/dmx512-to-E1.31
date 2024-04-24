@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <arpa/inet.h>
 
 #define VECTOR_ROOT_E131_DATA 0x00000004
 #define VECTOR_E131_DATA_PACKET 0x00000002
@@ -27,24 +28,23 @@ void doCIDShit(uint8_t* output, const char* uuid)
 }
 void initPacket(e131_packet_t* p, const char* cid, const char* name)
 {
-    // TODO: we have byte order problems with all the uint16_t
-    p->preamble_size = 0x0010;
-    p->postamble_size = 0;
+    p->preamble_size = htons(0x0010);
+    p->postamble_size = htons(0);
     memcpy(p->acn_id, ACN_ID, 12);
     // flags and length
-    p->root_flength = (0x7 << 12) | (sizeof(e131_packet_t) - 16);
-    p->root_vector = VECTOR_ROOT_E131_DATA;
+    p->root_flength = htons((0x7 << 12) | (sizeof(e131_packet_t) - 16));
+    p->root_vector = htonl(VECTOR_ROOT_E131_DATA);
     doCIDShit(p->cid, cid);
 
-    p->frame_flength = (0x7 << 12) | (sizeof(e131_packet_t) - 38);
-    p->frame_vector = VECTOR_E131_DATA_PACKET;
+    p->frame_flength = htons((0x7 << 12) | (sizeof(e131_packet_t) - 38));
+    p->frame_vector = htonl(VECTOR_E131_DATA_PACKET);
     snprintf(p->source_name, 64, name);
     p->priority = 100;
 
-    p->dmp_flength = (0x7 << 12) | (sizeof(e131_packet_t) - 115);
+    p->dmp_flength = htons((0x7 << 12) | (sizeof(e131_packet_t) - 115));
     p->dmp_vector = VECTOR_DMP_SET_PROPERTY;
     p->type = 0xA1;
-    p->first_address = 0;
-    p->address_increment = 1;
-    p->property_value_count = 513;
+    p->first_address = htons(0);
+    p->address_increment = htons(1);
+    p->property_value_count = htons(513);
 }
