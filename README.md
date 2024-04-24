@@ -1,1 +1,3 @@
-# DMX for artemis on a Tiny 2040
+# DMX to E1.31 ACN relay
+
+on esp32
