@@ -10,9 +10,8 @@
 
 void dmxCB(const uint8_t* buffer) {
   for(int i=0; i<3; ++i) {
-      Serial.printf("slot %d: val 0x%d\n", i+1, buffer[i]);
+      Serial.printf("slot %d: val %d\n", i+1, buffer[i]);
   }
-  Serial.printf("slot %d: val %d\n", 512, buffer[511]);
   analogWrite(LED_R, 255-buffer[0]);
   analogWrite(LED_G, 255-buffer[1]);
   analogWrite(LED_B, 255-buffer[2]);
