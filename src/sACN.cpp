@@ -2,7 +2,6 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <arpa/inet.h>
 
 #define VECTOR_ROOT_E131_DATA 0x00000004
 #define VECTOR_E131_DATA_PACKET 0x00000002

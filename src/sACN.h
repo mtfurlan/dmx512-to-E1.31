@@ -7,6 +7,7 @@
 // * https://github.com/tigoe/sACNSource/blob/main/src/sACNSource.cpp
 
 #include <stdint.h>
+#include <arpa/inet.h>
 
 
 #define ACN_SDT_MULTICAST_PORT 5568
@@ -40,6 +41,7 @@ typedef union {
         uint16_t address_increment; // static
         uint16_t property_value_count; //"Indicates 1+ the number of slots in packet", range 1 to 513
         uint8_t  property_values[513]; // I guess this size could be 1-513
+                                       // the first byte is start code, which shoudl probably be 0?
     } __attribute__((packed));
 
     uint8_t raw[638];

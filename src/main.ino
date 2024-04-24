@@ -18,21 +18,28 @@ static const char* password = "***REMOVED***";
 
 static AsyncUDP udp;
 static e131_packet_t packet;
+static uint8_t seq = 0;
 
 void dmxCB(const uint8_t* buffer) {
-    for(int i=0; i<3; ++i) {
-        Serial.printf("slot %d: val %d\n", i+1, buffer[i]);
-    }
-    analogWrite(LED_R, buffer[0]);
-    analogWrite(LED_G, buffer[1]);
-    analogWrite(LED_B, buffer[2]);
+    //for(int i=0; i<3; ++i) {
+    //    Serial.printf("slot %d: val %d\r\n", i+1, buffer[i]);
+    //}
+    analogWrite(LED_R, buffer[0]/5); // too bright
+    analogWrite(LED_G, buffer[1]/5);
+    analogWrite(LED_B, buffer[2]/5);
 
+    // TODO: if data doesn't change, only send three of the same packet
+    // then send a new one oevery 800-1000ms
+    // first byte is start code?
+    memcpy(packet.property_values+1, buffer, 15); // TODO: length
     udp.writeTo(packet.raw, sizeof(packet), &ip, ACN_SDT_MULTICAST_PORT);
+    packet.sequence_number = ++seq;
 }
 
 
 void setup () {
     initPacket(&packet, SACN_CID, "esp32 dmx relay");
+    packet.universe = htons(1);
 
 
     Serial.begin(115200);
