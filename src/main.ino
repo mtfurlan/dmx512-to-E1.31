@@ -3,6 +3,9 @@
 #include <AsyncUDP.h>
 #include "sACN.h"
 
+// define SSDI and SSID_PASS
+#include "secret.h"
+
 #define LED_R 4
 #define LED_G 16
 #define LED_B 17
@@ -10,11 +13,10 @@
 #define DMX_RX 27
 
 
+// you should probably change this I dunno
 static const char* SACN_CID = "bd89e380-c838-4cb5-8bd0-81edb8d74336";
+// this is what q light controller plus broadcasted at, and it works with wled
 static const ip_addr_t ip = IPADDR4_INIT_BYTES(239, 255, 0, 2);
-
-static const char* ssid = "***REMOVED***";
-static const char* password = "***REMOVED***";
 
 static AsyncUDP udp;
 static e131_packet_t packet;
@@ -55,7 +57,7 @@ void setup () {
     analogWrite(LED_B, 255);
 
     WiFi.mode(WIFI_STA);
-    WiFi.begin(ssid, password);
+    WiFi.begin(SSID, SSID_PASS);
     if (WiFi.waitForConnectResult() != WL_CONNECTED) {
         Serial.println("WiFi Failed");
         while (1) {
