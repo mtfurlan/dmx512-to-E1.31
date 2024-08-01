@@ -3,7 +3,7 @@
 #include <AsyncUDP.h>
 #include "sACN.h"
 
-// define SSDI and SSID_PASS
+// define SSDI and SSID_PASS with quotes
 #include "secret.h"
 
 #define LED_R 4
@@ -39,6 +39,17 @@ void dmxCB(const uint8_t* buffer) {
 }
 
 
+void initWiFi() {
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(SSID, SSID_PASS);
+    Serial.print("Connecting to WiFi ..");
+    while (WiFi.status() != WL_CONNECTED) {
+        Serial.print('.');
+        delay(1000);
+    }
+    Serial.println("Connected!");
+    Serial.println(WiFi.localIP());
+}
 void setup () {
     initPacket(&packet, SACN_CID, "esp32 dmx relay");
     packet.universe = htons(1);
@@ -56,15 +67,8 @@ void setup () {
     analogWrite(LED_G, 255);
     analogWrite(LED_B, 255);
 
-    WiFi.mode(WIFI_STA);
-    WiFi.begin(SSID, SSID_PASS);
-    if (WiFi.waitForConnectResult() != WL_CONNECTED) {
-        Serial.println("WiFi Failed");
-        while (1) {
-            delay(1000);
-        }
-    }
-    Serial.println("Connected!");
+    initWiFi();
+
     analogWrite(LED_R, 0);
     analogWrite(LED_G, 0);
     analogWrite(LED_B, 0);
@@ -100,6 +104,18 @@ void processDMX() {
         //Serial.printf("i is %d\n", i);
     }
 }
+
+#define wifi_interval  30000
 void loop() {
+    static unsigned long wifi_prev_check_millis = 0;
+    unsigned long currentMillis = millis();
+    // if WiFi is down, try reconnecting every wifi_interval seconds
+    if ((WiFi.status() != WL_CONNECTED) && (currentMillis - wifi_prev_check_millis >=wifi_interval)) {
+        Serial.print(millis());
+        Serial.println("Reconnecting to WiFi...");
+        WiFi.disconnect();
+        WiFi.reconnect();
+        wifi_prev_check_millis = currentMillis;
+    }
     processDMX();
 }
